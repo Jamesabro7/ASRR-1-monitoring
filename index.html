@@ -14,27 +14,30 @@
   --text: #e4e6ef;
   --text2: #8b90a5;
   --accent: #4f8cff;
-  --accent-dim: rgba(79,140,255,0.12);
+  --accent-dim: rgba(79, 140, 255, 0.12);
   --green: #34d399;
-  --green-dim: rgba(52,211,153,0.12);
+  --green-dim: rgba(52, 211, 153, 0.12);
   --yellow: #fbbf24;
-  --yellow-dim: rgba(251,191,36,0.12);
+  --yellow-dim: rgba(251, 191, 36, 0.12);
   --red: #f87171;
-  --red-dim: rgba(248,113,113,0.10);
+  --red-dim: rgba(248, 113, 113, 0.10);
   --orange: #fb923c;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'IBM Plex Sans', sans-serif;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top right, rgba(79, 140, 255, 0.08), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(52, 211, 153, 0.07), transparent 20%),
+    var(--bg);
   color: var(--text);
   min-height: 100vh;
 }
 
 .header {
-  background: var(--surface);
+  background: rgba(26, 29, 39, 0.92);
   border-bottom: 1px solid var(--border);
   padding: 20px 32px;
   position: sticky;
@@ -55,7 +58,6 @@ body {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.3px;
-  color: var(--text);
 }
 
 .header h1 span {
@@ -64,13 +66,20 @@ body {
   font-size: 14px;
   font-weight: 500;
   margin-left: 8px;
-  opacity: 0.8;
+  opacity: 0.85;
+}
+
+.header-subtitle {
+  margin-top: 6px;
+  color: var(--text2);
+  font-size: 13px;
 }
 
 .header-actions {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .btn {
@@ -85,13 +94,16 @@ body {
   transition: all 0.15s;
   font-weight: 500;
 }
+
 .btn:hover { background: var(--border); color: var(--text); }
+
 .btn-accent {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
 }
-.btn-accent:hover { opacity: 0.85; }
+
+.btn-accent:hover { opacity: 0.88; }
 
 .sync-badge {
   display: inline-flex;
@@ -101,32 +113,22 @@ body {
   border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
-  border: 1px solid var(--border);
-}
-.sync-badge.online {
   background: var(--green-dim);
   color: var(--green);
-  border-color: rgba(52,211,153,0.3);
+  border: 1px solid rgba(52, 211, 153, 0.3);
 }
-.sync-badge.offline {
-  background: var(--red-dim);
-  color: var(--red);
-  border-color: rgba(248,113,113,0.3);
-}
-.sync-badge.syncing {
-  background: var(--yellow-dim);
-  color: var(--yellow);
-  border-color: rgba(251,191,36,0.3);
-}
+
 .sync-dot {
-  width: 7px; height: 7px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: currentColor;
+  animation: pulse 2s infinite;
 }
-.sync-badge.online .sync-dot { animation: pulse 2s infinite; }
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  50% { opacity: 0.35; }
 }
 
 .stats-bar {
@@ -141,14 +143,15 @@ body {
   align-items: center;
   gap: 10px;
   padding: 10px 16px;
-  background: var(--surface2);
+  background: rgba(35, 39, 51, 0.9);
   border-radius: 10px;
   border: 1px solid var(--border);
   min-width: 140px;
 }
 
 .stat-dot {
-  width: 10px; height: 10px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -168,7 +171,7 @@ body {
 
 .progress-bar-wrap {
   flex: 1;
-  min-width: 200px;
+  min-width: 220px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -178,6 +181,7 @@ body {
 .progress-bar-label {
   display: flex;
   justify-content: space-between;
+  gap: 12px;
   font-size: 11px;
   color: var(--text2);
 }
@@ -194,20 +198,21 @@ body {
   height: 100%;
   background: linear-gradient(90deg, var(--accent), var(--green));
   border-radius: 8px;
-  transition: width 0.4s ease;
+  transition: width 0.35s ease;
 }
 
 .filters {
   display: flex;
   gap: 8px;
   padding: 12px 32px;
-  background: var(--bg);
+  background: rgba(15, 17, 23, 0.94);
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
   align-items: center;
   position: sticky;
-  top: 106px;
+  top: 110px;
   z-index: 99;
+  backdrop-filter: blur(12px);
 }
 
 .filter-btn {
@@ -223,7 +228,9 @@ body {
   font-weight: 500;
   white-space: nowrap;
 }
+
 .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+
 .filter-btn.active {
   background: var(--accent-dim);
   border-color: var(--accent);
@@ -239,10 +246,11 @@ body {
   color: var(--text);
   font-size: 13px;
   font-family: inherit;
-  width: 240px;
+  width: 260px;
   outline: none;
   transition: border-color 0.15s;
 }
+
 .search-box:focus { border-color: var(--accent); }
 .search-box::placeholder { color: var(--text2); }
 
@@ -316,13 +324,14 @@ thead tr:first-child th.check-col {
 .col-mini-fill {
   height: 100%;
   border-radius: 5px;
-  transition: width 0.4s ease;
+  transition: width 0.35s ease;
 }
 
 tbody tr {
   transition: background 0.1s;
 }
-tbody tr:hover { background: var(--surface); }
+
+tbody tr:hover { background: rgba(26, 29, 39, 0.8); }
 tbody tr.completed { background: var(--green-dim); }
 
 tbody td {
@@ -340,24 +349,34 @@ td.num {
 }
 
 td.org-name {
-  max-width: 420px;
+  min-width: 360px;
+  max-width: 560px;
   font-weight: 500;
-  line-height: 1.35;
+  line-height: 1.4;
+}
+
+.org-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.passport-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(79, 140, 255, 0.14);
+  color: #9ec0ff;
+  border: 1px solid rgba(79, 140, 255, 0.24);
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
 }
 
 td.check-cell {
   text-align: center;
-}
-
-.category-row td {
-  background: var(--surface2);
-  font-weight: 700;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--accent);
-  padding: 8px 14px;
-  border-bottom: 1px solid var(--border);
 }
 
 .cb-wrap {
@@ -392,7 +411,8 @@ td.check-cell {
 .cb-wrap input[type="checkbox"]:checked::after {
   content: '\2713';
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
   font-size: 14px;
@@ -419,7 +439,7 @@ td.check-cell {
   bottom: 24px;
   right: 24px;
   background: var(--green);
-  color: #000;
+  color: #09110d;
   padding: 12px 20px;
   border-radius: 10px;
   font-weight: 600;
@@ -430,63 +450,33 @@ td.check-cell {
   pointer-events: none;
   z-index: 200;
 }
+
 .export-toast.show {
   opacity: 1;
   transform: translateY(0);
 }
 
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  gap: 16px;
-  transition: opacity 0.4s;
-}
-.loading-overlay.hide {
-  opacity: 0;
-  pointer-events: none;
-}
-.spinner {
-  width: 36px; height: 36px;
-  border: 3px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text {
-  color: var(--text2);
-  font-size: 14px;
-}
-
 @media (max-width: 900px) {
   .header { padding: 16px; }
-  .filters { padding: 10px 16px; }
+  .filters { padding: 10px 16px; top: 148px; }
   .table-wrap { padding: 12px 8px 60px; }
-  .search-box { width: 160px; }
-  td.org-name { max-width: 220px; }
+  .search-box { width: 100%; margin-left: 0; }
+  td.org-name { min-width: 280px; }
 }
 </style>
 </head>
 <body>
 
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="spinner"></div>
-  <div class="loading-text">Firebase га уланмоқда...</div>
-</div>
-
 <div class="header">
   <div class="header-top">
-    <h1>Мониторинг паспортлари <span>ПК-394</span></h1>
+    <div>
+      <h1>Мониторинг паспортлари <span>ПК-394</span></h1>
+      <div class="header-subtitle">Қисқартирилган рўйхат: фақат берилган 61 та ташкилот ва уларнинг паспорт сони.</div>
+    </div>
     <div class="header-actions">
-      <div class="sync-badge syncing" id="syncBadge">
+      <div class="sync-badge">
         <div class="sync-dot"></div>
-        <span id="syncText">Уланмоқда...</span>
+        <span>Локал режим</span>
       </div>
       <button class="btn" onclick="resetAll()">&#8635; Тозалаш</button>
       <button class="btn btn-accent" onclick="exportCSV()">&#8595; CSV экспорт</button>
@@ -496,10 +486,10 @@ td.check-cell {
 </div>
 
 <div class="filters">
-  <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">Барчаси</button>
-  <button class="filter-btn" data-filter="none" onclick="setFilter('none',this)">Бошланмаган</button>
-  <button class="filter-btn" data-filter="partial" onclick="setFilter('partial',this)">Жараёнда</button>
-  <button class="filter-btn" data-filter="done" onclick="setFilter('done',this)">Тугалланган &#10003;</button>
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">Барчаси</button>
+  <button class="filter-btn" data-filter="none" onclick="setFilter('none', this)">Бошланмаган</button>
+  <button class="filter-btn" data-filter="partial" onclick="setFilter('partial', this)">Жараёнда</button>
+  <button class="filter-btn" data-filter="done" onclick="setFilter('done', this)">Тугалланган &#10003;</button>
   <input class="search-box" type="text" placeholder="Қидириш..." oninput="applyFilters()">
 </div>
 
@@ -515,7 +505,7 @@ td.check-cell {
         <th class="check-col">АСРР<br>текширган</th>
         <th>Ҳолати</th>
       </tr>
-      <tr class="col-stats-row" id="colStatsRow">
+      <tr class="col-stats-row">
         <th></th>
         <th></th>
         <th id="colStat0"></th>
@@ -531,127 +521,96 @@ td.check-cell {
 
 <div class="export-toast" id="toast"></div>
 
-<!-- Firebase SDK (compat) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-
 <script>
-// ── Firebase Config ──
-firebase.initializeApp({
-  apiKey: "AIzaSyDmcw-4oeKEvYQjIEB45tc7IxDzNDqsZLM",
-  authDomain: "asrr-1-monitoring.firebaseapp.com",
-  databaseURL: "https://asrr-1-monitoring-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "asrr-1-monitoring",
-  storageBucket: "asrr-1-monitoring.firebasestorage.app",
-  messagingSenderId: "1053668888110",
-  appId: "1:1053668888110:web:1842adcd76d80e09c899bf"
-});
+const STORAGE_KEY = 'pk394-monitoring-passports-v1';
 
-const db = firebase.database();
-const checklistRef = db.ref('checklist');
-
-// ── Organizations ──
 const orgs = [
-  {cat:"Суд ва ҳуқуқни муҳофаза қилиш органлари"},
-  {id:1, name:"Олий суд"},
-  {id:2, name:"Судьялар олий кенгаши"},
-  {id:3, name:"Бош прокуратура"},
-  {id:4, name:"Давлат хавфсизлик хизмати"},
-  {cat:"Молия ва иқтисодиёт"},
-  {id:5, name:"Марказий банк"},
-  {id:6, name:"Иқтисодиёт ва молия вазирлиги"},
-  {id:7, name:"Инвестициялар, саноат ва савдо вазирлиги"},
-  {cat:"Вазирликлар"},
-  {id:8, name:"Адлия вазирлиги"},
-  {id:9, name:"Ички ишлар вазирлиги"},
-  {id:10, name:"Мудофаа вазирлиги"},
-  {id:11, name:"Ташқи ишлар вазирлиги"},
-  {id:12, name:"Энергетика вазирлиги"},
-  {id:13, name:"Қишлоқ хўжалиги вазирлиги"},
-  {id:14, name:"Камбағалликни қисқартириш ва бандлик вазирлиги"},
-  {id:15, name:"Сув хўжалиги вазирлиги"},
-  {id:16, name:"Қурилиш ва уй-жой коммунал хўжалиги вазирлиги"},
-  {id:17, name:"Транспорт вазирлиги"},
-  {id:18, name:"Тоғ-кон саноати ва геология вазирлиги"},
-  {id:19, name:"Рақамли технологиялар вазирлиги"},
-  {id:20, name:"Соғлиқни сақлаш вазирлиги"},
-  {id:21, name:"Олий таълим, фан ва инновациялар вазирлиги"},
-  {id:22, name:"Мактабгача ва мактаб таълими вазирлиги"},
-  {id:23, name:"Спорт вазирлиги"},
-  {id:24, name:"Маданият вазирлиги"},
-  {id:25, name:"Фавқулодда вазиятлар вазирлиги"},
-  {cat:"Қўмиталар"},
-  {id:26, name:"Экология ва иқлим ўзгариши миллий қўмитаси"},
-  {id:27, name:"Солиқ қўмитаси"},
-  {id:28, name:"Божхона қўмитаси"},
-  {id:29, name:"Оила ва хотин-қизлар қўмитаси"},
-  {id:30, name:"Урбанизация ва уй-жой бозорини барқарор ривожлантириш миллий қўмитаси"},
-  {id:31, name:"Миллий статистика қўмитаси"},
-  {id:32, name:"Рақобатни ривожлантириш ва истеъмолчилар ҳуқуқларини ҳимоя қилиш қўмитаси"},
-  {id:33, name:"Миллатлараро муносабатлар ва хориждаги ватандошлар масалалари бўйича қўмита"},
-  {id:34, name:"Дин ишлари бўйича қўмита"},
-  {id:35, name:"Туризм қўмитаси"},
-  {id:36, name:"Саноат, радиация ва ядро хавфсизлиги қўмитаси"},
-  {cat:"Агентликлар"},
-  {id:37, name:"Ижтимоий ҳимоя миллий агентлиги"},
-  {id:38, name:"Бошқарув самарадорлиги агентлиги"},
-  {id:39, name:"Коррупцияга қарши курашиш агентлиги"},
-  {id:40, name:"Таълим сифатини таъминлаш миллий агентлиги"},
-  {id:41, name:"Наркотиклар ва ўқотар қуролларни назорат қилиш агентлиги"},
-  {id:42, name:"Давлат активларини бошқариш агентлиги"},
-  {id:43, name:"Ёшлар ишлари агентлиги"},
-  {id:44, name:"Маданий мерос агентлиги"},
-  {id:45, name:"Миграция агентлиги"},
-  {id:46, name:"Енгил саноатни ривожлантириш агентлиги"},
-  {id:47, name:"Энергетика бозорини ривожлантириш ва тартибга солиш агентлиги"},
-  {id:48, name:"Энергия самарадорлиги миллий агентлиги"},
-  {id:49, name:"Атом энергияси агентлиги"},
-  {id:50, name:"Ўзбекистон техник жиҳатдан тартибга солиш агентлиги"},
-  {id:51, name:"Телекоммуникацияларни тартибга солиш агентлиги"},
-  {id:52, name:"Миллий антидопинг агентлиги"},
-  {cat:"Бошқа ташкилотлар"},
-  {id:53, name:"Миллий гвардия"},
-  {id:54, name:"Агросаноат мажмуи устидан назорат қилиш инспекцияси"},
-  {id:55, name:"Қурилиш ва уй-жой коммунал хўжалиги соҳасида назорат инспекцияси"},
-  {id:56, name:"Электр энергияси, нефть маҳсулотлари ва газдан фойдаланишни назорат қилиш инспекцияси"},
-  {cat:"Ҳудудлар"},
-  {id:57, name:"Қорақалпоғистон Республикаси Вазирлар кенгаши"},
-  {id:58, name:"Андижон вилояти ҳокимлиги"},
-  {id:59, name:"Бухоро вилояти ҳокимлиги"},
-  {id:60, name:"Жиззах вилояти ҳокимлиги"},
-  {id:61, name:"Қашқадарё вилояти ҳокимлиги"},
-  {id:62, name:"Навоий вилояти ҳокимлиги"},
-  {id:63, name:"Наманган вилояти ҳокимлиги"},
-  {id:64, name:"Самарқанд вилояти ҳокимлиги"},
-  {id:65, name:"Сирдарё вилояти ҳокимлиги"},
-  {id:66, name:"Сурхондарё вилояти ҳокимлиги"},
-  {id:67, name:"Тошкент вилоят ҳокимлиги"},
-  {id:68, name:"Фарғона вилояти ҳокимлиги"},
-  {id:69, name:"Хоразм вилояти ҳокимлиги"},
-  {id:70, name:"Тошкент шаҳар ҳокимлиги"},
-  {cat:"Институтлар ва марказлар"},
-  {id:71, name:"Қонунчилик ва ҳуқуқий сиёсат институти"},
-  {id:72, name:"Тадбиркорлик субъектларининг ҳуқуқлари ва қонуний манфаатларини ҳимоя қилиш бўйича вакил ва унинг девони"},
-  {id:73, name:"Республика Маънавият ва маърифат маркази"},
-  {id:74, name:"Инсон ҳуқуқлари бўйича Ўзбекистон Республикаси миллий маркази"},
-  {id:75, name:"Оммавий ахборот воситалари учун контент тайёрлаш маркази"},
-  {id:76, name:"\"Тараққиёт стратегияси\" маркази"},
-  {cat:"Жамғармалар ва бошқалар"},
-  {id:77, name:"\"Эл-юрт умиди\" жамғармаси"},
-  {id:78, name:"Маданият ва санъатни ривожлантириш жамғармаси"},
-  {id:79, name:"\"Нуроний\" жамғармаси"},
-  {id:80, name:"Савдо-саноат палатаси"},
-  {id:81, name:"\"Ўзмиллийбанк\" АЖ"},
-  {id:82, name:"\"Ўзсувтаъминот\" АЖ"},
-  {id:83, name:"\"Ўзавтосаноат\" АЖ"},
-  {id:84, name:"\"Иссиқлик таъминоти\" АЖ"},
-  {id:85, name:"\"Ўзсаноатқурилишматериаллари\" уюшмаси"},
+  { id: 1, name: "Олий таълим, фан ва инновациялар вазирлиги", count: 74, done: false },
+  { id: 2, name: "Соғлиқни сақлаш вазирлиги", count: 36, done: false },
+  { id: 3, name: "Иқтисодиёт ва молия вазирлиги", count: 35, done: false },
+  { id: 4, name: "Инвестициялар, саноат ва савдо вазирлиги", count: 34, done: false },
+  { id: 5, name: "Рақамли технологиялар вазирлиги", count: 29, done: false },
+  { id: 6, name: "Экология ва иқлим ўзгариши миллий қўмитаси", count: 29, done: false },
+  { id: 7, name: "Адлия вазирлиги", count: 27, done: true },
+  { id: 8, name: "Маданият вазирлиги", count: 25, done: false },
+  { id: 9, name: "Қишлоқ хўжалиги вазирлиги", count: 19, done: false },
+  { id: 10, name: "Мактабгача ва мактаб таълими вазирлиги", count: 18, done: true },
+  { id: 11, name: "Қорақалпоғистон Республикаси Вазирлар Кенгаши", count: 18, done: true },
+  { id: 12, name: "Транспорт вазирлиги", count: 17, done: false },
+  { id: 13, name: "вилоятлар ва Тошкент шаҳар ҳокимликлари", count: 16, done: true },
+  { id: 14, name: "Спорт вазирлиги", count: 13, done: true },
+  { id: 15, name: "Ташқи ишлар вазирлиги", count: 13, done: false },
+  { id: 16, name: "Сув хўжалиги вазирлиги", count: 12, done: true },
+  { id: 17, name: "Қурилиш ва уй-жой коммунал хўжалиги вазирлиги", count: 12, done: true },
+  { id: 18, name: "Ички ишлар вазирлиги", count: 11, done: false },
+  { id: 19, name: "Камбағалликни қисқартириш ва бандлик вазирлиги", count: 11, done: false },
+  { id: 20, name: "Ёшлар ишлари агентлиги", count: 10, done: true },
+  { id: 21, name: "Энергетика вазирлиги", count: 10, done: false },
+  { id: 22, name: "Ижтимоий ҳимоя миллий агентлиги", count: 9, done: false },
+  { id: 23, name: "Туризм қўмитаси", count: 9, done: true },
+  { id: 24, name: "Фавқулодда вазиятлар вазирлиги", count: 8, done: false },
+  { id: 25, name: "Тоғ-кон саноати ва геология вазирлиги", count: 7, done: true },
+  { id: 26, name: "Маданий мерос агентлиги", count: 6, done: true },
+  { id: 27, name: "Миллатлараро муносабатлар ва хориждаги ватандошлар масалалари бўйича қўмита", count: 6, done: false },
+  { id: 28, name: "Оила ва хотин-қизлар қўмитаси", count: 6, done: true },
+  { id: 29, name: "Миграция агентлиги", count: 5, done: false },
+  { id: 30, name: "Мудофаа вазирлиги", count: 5, done: true },
+  { id: 31, name: "Урбанизация ва уй-жой бозорини барқарор ривожлантириш миллий қўмитаси", count: 5, done: false },
+  { id: 32, name: "Бошқарув самарадорлиги агентлиги", count: 4, done: false },
+  { id: 33, name: "Олий суд", count: 4, done: true },
+  { id: 34, name: "Энергия самарадорлиги миллий агентлиги", count: 4, done: false },
+  { id: 35, name: "Таълим сифатини таъминлаш миллий агентлиги", count: 3, done: false },
+  { id: 36, name: "Фанлар академияси", count: 3, done: false },
+  { id: 37, name: "Ахборот ва оммавий коммуникациялар агентлиги", count: 2, done: false },
+  { id: 38, name: "Давлат активларини бошқариш агентлиги", count: 2, done: true },
+  { id: 39, name: "Жаҳон савдо ташкилоти масалалари бўйича махсус вакил", count: 2, done: false },
+  { id: 40, name: "Инсон ҳуқуқлари бўйича Миллий марказ", count: 2, done: false },
+  { id: 41, name: "Оммавий ахборот воситалари учун контент тайёрлаш маркази", count: 2, done: false },
+  { id: 42, name: "Рақобатни ривожлантириш ва истеъмолчилар ҳуқуқларини ҳимоя қилиш қўмитаси", count: 2, done: true },
+  { id: 43, name: "Республика Маънавият ва маърифат маркази", count: 2, done: true },
+  { id: 44, name: "Савдо-саноат палатаси", count: 2, done: false },
+  { id: 45, name: "бошқа ҳуқуқни муҳофаза қилувчи органлар", count: 2, done: false },
+  { id: 46, name: "Қурилиш ва уй-жой коммунал хўжалиги соҳасида назорат қилиш инспекцияси", count: 2, done: false },
+  { id: 47, name: "“Ўзсувтаъминот” АЖ", count: 2, done: false },
+  { id: 48, name: "Ўзбекистон футбол ассоциацияси", count: 1, done: false },
+  { id: 49, name: "Бош прокуратура", count: 1, done: false },
+  { id: 50, name: "Вазирлар Маҳкамаси", count: 1, done: false },
+  { id: 51, name: "Енгил саноатни ривожлантириш агентлиги", count: 1, done: false },
+  { id: 52, name: "Марказий банк", count: 1, done: false },
+  { id: 53, name: "Олий Мажлис Сенати (келишилган ҳолда)", count: 1, done: false },
+  { id: 54, name: "Сиёсий партияларнинг марказий кенгашлари", count: 1, done: false },
+  { id: 55, name: "Радиация ва ядро хавфсизлиги қўмитаси", count: 1, done: true },
+  { id: 56, name: "“Ўзбекнефтгаз” АЖ", count: 1, done: false },
+  { id: 57, name: "“Ўзтрансгаз” АЖ", count: 1, done: false },
+  { id: 58, name: "“Ижтимоий фикр” маркази", count: 1, done: false },
+  { id: 59, name: "“Иссиқлик таъминоти” АЖ", count: 1, done: false },
+  { id: 60, name: "“Тараққиёт стратегияси” маркази", count: 1, done: true },
+  { id: 61, name: "“Ҳудудгаз-таъминот” АЖ", count: 1, done: false }
 ];
 
-// ── State ──
-let state = {};
+let state = buildInitialState();
 let currentFilter = 'all';
-let isConnected = false;
+
+function buildInitialState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch (error) {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  }
+
+  const initialState = {};
+  orgs.forEach(function(org) {
+    initialState[org.id] = org.done ? [true, true, true, true] : [false, false, false, false];
+  });
+  return initialState;
+}
+
+function persistState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
 
 function getOrgState(id) {
   if (!state[id]) state[id] = [false, false, false, false];
@@ -663,120 +622,86 @@ function getCheckedCount(id) {
 }
 
 function statusLabel(count) {
-  const labels = ['Бошланмаган','1/4','2/4','3/4','Тугалланган \u2713'];
+  const labels = ['Бошланмаган', '1/4', '2/4', '3/4', 'Тугалланган \u2713'];
   return '<span class="row-status status-' + count + '">' + labels[count] + '</span>';
 }
 
-// ── Firebase: realtime listener ──
-checklistRef.on('value', function(snapshot) {
-  var data = snapshot.val();
-  if (data) {
-    state = {};
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        state[key] = Array.isArray(data[key]) ? data[key] : [false, false, false, false];
-      }
-    }
-  } else {
-    state = {};
-  }
-  render();
-
-  var overlay = document.getElementById('loadingOverlay');
-  if (overlay) overlay.classList.add('hide');
-  setTimeout(function() { if (overlay) overlay.style.display = 'none'; }, 500);
-});
-
-// ── Connection status ──
-db.ref('.info/connected').on('value', function(snap) {
-  isConnected = snap.val() === true;
-  updateSyncBadge();
-});
-
-function updateSyncBadge() {
-  var badge = document.getElementById('syncBadge');
-  var text = document.getElementById('syncText');
-  if (isConnected) {
-    badge.className = 'sync-badge online';
-    text.textContent = 'Онлайн \u00b7 Realtime';
-  } else {
-    badge.className = 'sync-badge offline';
-    text.textContent = 'Офлайн';
-  }
-}
-
-// ── Toggle → Firebase ──
 function toggle(id, idx, val) {
-  var s = getOrgState(id);
-  s[idx] = val;
-  checklistRef.child(String(id)).set(s);
+  const orgState = getOrgState(id);
+  orgState[idx] = val;
+  persistState();
+  render();
 }
 
-// ── Render ──
 function render() {
-  var tbody = document.getElementById('tableBody');
-  var searchEl = document.querySelector('.search-box');
-  var search = searchEl ? searchEl.value.toLowerCase() : '';
-  var html = '';
+  const tbody = document.getElementById('tableBody');
+  const searchEl = document.querySelector('.search-box');
+  const search = searchEl ? searchEl.value.toLowerCase() : '';
+  let html = '';
 
-  for (var i = 0; i < orgs.length; i++) {
-    var item = orgs[i];
-    if (item.cat) {
-      html += '<tr class="category-row"><td colspan="7">' + item.cat + '</td></tr>';
-      continue;
-    }
-    var s = getOrgState(item.id);
-    var cnt = getCheckedCount(item.id);
-    var matchSearch = !search || item.name.toLowerCase().indexOf(search) !== -1;
-    var matchFilter = currentFilter === 'all'
+  orgs.forEach(function(item) {
+    const orgState = getOrgState(item.id);
+    const cnt = getCheckedCount(item.id);
+    const matchSearch = !search || item.name.toLowerCase().indexOf(search) !== -1;
+    const matchFilter = currentFilter === 'all'
       || (currentFilter === 'none' && cnt === 0)
       || (currentFilter === 'partial' && cnt > 0 && cnt < 4)
       || (currentFilter === 'done' && cnt === 4);
 
-    if (!matchSearch || !matchFilter) continue;
+    if (!matchSearch || !matchFilter) return;
 
-    html += '<tr class="' + (cnt===4?'completed':'') + '">'
+    html += '<tr class="' + (cnt === 4 ? 'completed' : '') + '">'
       + '<td class="num">' + item.id + '</td>'
-      + '<td class="org-name">' + item.name + '</td>';
-    for (var j = 0; j < 4; j++) {
+      + '<td class="org-name"><div class="org-line"><span>' + item.name + '</span><span class="passport-count">' + item.count + ' та</span></div></td>';
+
+    for (let j = 0; j < 4; j++) {
       html += '<td class="check-cell"><label class="cb-wrap"><input type="checkbox" '
-        + (s[j]?'checked ':'')
-        + 'onchange="toggle(' + item.id + ',' + j + ',this.checked)"></label></td>';
+        + (orgState[j] ? 'checked ' : '')
+        + 'onchange="toggle(' + item.id + ',' + j + ', this.checked)"></label></td>';
     }
+
     html += '<td>' + statusLabel(cnt) + '</td></tr>';
-  }
+  });
+
   tbody.innerHTML = html;
   updateStats();
 }
 
-function setFilter(f, btn) {
-  currentFilter = f;
-  var btns = document.querySelectorAll('.filter-btn');
-  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  const buttons = document.querySelectorAll('.filter-btn');
+  buttons.forEach(function(button) { button.classList.remove('active'); });
   btn.classList.add('active');
   render();
 }
 
-function applyFilters() { render(); }
+function applyFilters() {
+  render();
+}
 
 function updateStats() {
-  var total = 0;
-  for (var i = 0; i < orgs.length; i++) { if (orgs[i].id) total++; }
-  var done = 0, partial = 0, none = 0, totalChecks = 0;
-  var colCounts = [0, 0, 0, 0];
+  const total = orgs.length;
+  let done = 0;
+  let partial = 0;
+  let none = 0;
+  let totalChecks = 0;
+  const colCounts = [0, 0, 0, 0];
 
-  for (var i = 0; i < orgs.length; i++) {
-    var o = orgs[i];
-    if (!o.id) continue;
-    var s = getOrgState(o.id);
-    var c = getCheckedCount(o.id);
-    totalChecks += c;
-    for (var j = 0; j < 4; j++) { if (s[j]) colCounts[j]++; }
-    if (c === 4) done++;
-    else if (c > 0) partial++;
+  orgs.forEach(function(org) {
+    const orgState = getOrgState(org.id);
+    const checked = getCheckedCount(org.id);
+    totalChecks += checked;
+
+    for (let j = 0; j < 4; j++) {
+      if (orgState[j]) colCounts[j]++;
+    }
+
+    if (checked === 4) done++;
+    else if (checked > 0) partial++;
     else none++;
-  }
-  var pct = Math.round(totalChecks / (total * 4) * 100);
+  });
+
+  const pct = Math.round(totalChecks / (total * 4) * 100);
 
   document.getElementById('statsBar').innerHTML =
     '<div class="stat-card">'
@@ -792,52 +717,64 @@ function updateStats() {
     + '<div><div class="stat-value">' + none + '</div><div class="stat-label">Бошланмаган</div></div>'
     + '</div>'
     + '<div class="progress-bar-wrap">'
-    + '<div class="progress-bar-label"><span>Умумий прогресс</span><span>' + pct + '% (' + totalChecks + '/' + (total*4) + ')</span></div>'
+    + '<div class="progress-bar-label"><span>Умумий прогресс</span><span>' + pct + '% (' + totalChecks + '/' + (total * 4) + ')</span></div>'
     + '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>'
     + '</div>';
 
-  var colColors = ['var(--accent)','var(--orange)','var(--yellow)','var(--green)'];
-  for (var i = 0; i < 4; i++) {
-    var cp = Math.round(colCounts[i] / total * 100);
-    document.getElementById('colStat'+i).innerHTML =
+  const colColors = ['var(--accent)', 'var(--orange)', 'var(--yellow)', 'var(--green)'];
+  for (let i = 0; i < 4; i++) {
+    const colPct = Math.round(colCounts[i] / total * 100);
+    document.getElementById('colStat' + i).innerHTML =
       '<div class="col-stat">'
-      + '<div class="col-stat-pct" style="color:' + colColors[i] + '">' + cp + '%</div>'
+      + '<div class="col-stat-pct" style="color:' + colColors[i] + '">' + colPct + '%</div>'
       + '<div class="col-stat-count">' + colCounts[i] + ' / ' + total + '</div>'
-      + '<div class="col-mini-bar"><div class="col-mini-fill" style="width:' + cp + '%;background:' + colColors[i] + '"></div></div>'
+      + '<div class="col-mini-bar"><div class="col-mini-fill" style="width:' + colPct + '%;background:' + colColors[i] + '"></div></div>'
       + '</div>';
   }
 }
 
 function resetAll() {
-  if (!confirm('Барча маълумотлар ўчирилсинми? Бу барча фойдаланувчилар учун ўчирилади!')) return;
-  checklistRef.remove();
+  if (!confirm('Барча галочкалар тозалансинми?')) return;
+  state = {};
+  orgs.forEach(function(org) {
+    state[org.id] = [false, false, false, false];
+  });
+  persistState();
+  render();
 }
 
 function exportCSV() {
-  var csv = '\uFEFF\u2116,Ташкилот номи,Паспорт мавжуд,Масъул аниқланган,Порталга киритилган,АСРР текширган,Ҳолати\n';
-  for (var i = 0; i < orgs.length; i++) {
-    var o = orgs[i];
-    if (!o.id) continue;
-    var s = getOrgState(o.id);
-    var cnt = getCheckedCount(o.id);
-    var labels = ['Бошланмаган','1/4','2/4','3/4','Тугалланган'];
-    var name = o.name.replace(/"/g, '""');
-    csv += o.id + ',"' + name + '",' + (s[0]?'Ха':'Йўқ') + ',' + (s[1]?'Ха':'Йўқ') + ',' + (s[2]?'Ха':'Йўқ') + ',' + (s[3]?'Ха':'Йўқ') + ',' + labels[cnt] + '\n';
-  }
-  var blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'pk394_monitoring_' + new Date().toISOString().slice(0,10) + '.csv';
-  a.click();
+  let csv = '\uFEFF\u2116,Ташкилот номи,Сони,Паспорт мавжуд,Масъул аниқланган,Порталга киритилган,АСРР текширган,Ҳолати\n';
+  const labels = ['Бошланмаган', '1/4', '2/4', '3/4', 'Тугалланган'];
+
+  orgs.forEach(function(org) {
+    const orgState = getOrgState(org.id);
+    const cnt = getCheckedCount(org.id);
+    const name = org.name.replace(/"/g, '""');
+    csv += org.id + ',"' + name + '",' + org.count + ','
+      + (orgState[0] ? 'Ха' : 'Йўқ') + ','
+      + (orgState[1] ? 'Ха' : 'Йўқ') + ','
+      + (orgState[2] ? 'Ха' : 'Йўқ') + ','
+      + (orgState[3] ? 'Ха' : 'Йўқ') + ','
+      + labels[cnt] + '\n';
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'pk394_monitoring_' + new Date().toISOString().slice(0, 10) + '.csv';
+  link.click();
   showToast('\u2193 CSV файл юклаб олинди');
 }
 
-function showToast(msg) {
-  var toast = document.getElementById('toast');
-  toast.textContent = msg;
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
   toast.classList.add('show');
   setTimeout(function() { toast.classList.remove('show'); }, 2500);
 }
+
+render();
 </script>
 </body>
 </html>
